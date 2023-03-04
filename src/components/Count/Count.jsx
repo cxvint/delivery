@@ -5,12 +5,12 @@ export const Count = (props) => {
 	const [count, setCount] = useState(props.count);
 
 	const addCount = () => {
-		setCount(count + 1);
+		setCount((prevCount) => prevCount + 1);
 	};
 
 	const removeCount = () => {
 		if (count > 1) {
-			setCount(count - 1);
+			setCount((prevCount) => prevCount - 1);
 		}
 	};
 
