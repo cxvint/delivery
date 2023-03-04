@@ -15,8 +15,8 @@ export const Order = () => {
 
 				<div className={style.wrap_list}>
 					<ul className={style.list}></ul>
-					{orderList.map((item) => (
-						<OrderGoods item={item} />
+					{orderList.map((item, i) => (
+						<OrderGoods key={i} item={item} />
 					))}
 					<div className={style.total}>
 						<p>Итого</p>
