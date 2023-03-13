@@ -1,11 +1,40 @@
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+	changeTouch,
+	submitForm,
+	updateFormValue,
+	validateForm,
+} from '../../store/form/formSlice';
 import { closeModal } from '../../store/modalDelivery/modalDeliverySlice';
 import style from './ModalDelivery.module.css';
 
 export const ModalDelivery = () => {
 	const { isOpen } = useSelector((state) => state.modal);
+	const form = useSelector((state) => state.form);
+	const { orderList } = useSelector((state) => state.order);
 	const dispatch = useDispatch();
+
+	const handleInputChange = (e) => {
+		dispatch(
+			updateFormValue({
+				field: e.target.name,
+				value: e.target.value,
+			})
+		);
+
+		dispatch(validateForm());
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		dispatch(validateForm());
+		dispatch(changeTouch());
+
+		if (Object.keys(form.errors).length === 0 && form.touch) {
+			dispatch(submitForm({ ...form, orderList }));
+		}
+	};
 
 	return (
 		isOpen && (
@@ -20,19 +49,24 @@ export const ModalDelivery = () => {
 					<div className={style.container}>
 						<h2 className={style.title}>Доставка</h2>
 
-						<form className={style.form} id='delivery'>
+						<form className={style.form} id='delivery' onSubmit={handleSubmit}>
 							<fieldset className={style.fieldset}>
 								<input
 									className={style.input}
 									type='text'
 									name='name'
+									value={form.name}
 									placeholder='Ваше имя'
+									onChange={handleInputChange}
 								/>
+
 								<input
 									className={style.input}
 									type='tel'
 									name='phone'
+									value={form.phone}
 									placeholder='Телефон'
+									onChange={handleInputChange}
 								/>
 							</fieldset>
 
@@ -43,6 +77,8 @@ export const ModalDelivery = () => {
 										type='radio'
 										name='format'
 										value='pickup'
+										checked={form.format === 'pickup'}
+										onChange={handleInputChange}
 									/>
 									<span>Самовывоз</span>
 								</label>
@@ -53,37 +89,51 @@ export const ModalDelivery = () => {
 										type='radio'
 										name='format'
 										value='delivery'
-										checked
+										checked={form.format === 'delivery'}
+										onChange={handleInputChange}
 									/>
 									<span>Доставка</span>
 								</label>
 							</fieldset>
 
-							<fieldset className={style.fieldset}>
-								<input
-									className={style.input}
-									type='text'
-									name='address'
-									placeholder='Улица, дом, квартира'
-								/>
-								<input
-									className={classNames(style.input, style.input_half)}
-									type='number'
-									name='floor'
-									placeholder='Этаж'
-								/>
-								<input
-									className={classNames(style.input, style.input_half)}
-									type='number'
-									name='intercom'
-									placeholder='Домофон'
-								/>
-							</fieldset>
+							{form.format === 'delivery' && (
+								<fieldset className={style.fieldset}>
+									<input
+										className={style.input}
+										type='text'
+										name='address'
+										value={form.address}
+										placeholder='Улица, дом, квартира'
+										onChange={handleInputChange}
+									/>
+									<input
+										className={classNames(style.input, style.input_half)}
+										type='number'
+										name='floor'
+										value={form.floor}
+										placeholder='Этаж'
+										onChange={handleInputChange}
+									/>
+									<input
+										className={classNames(style.input, style.input_half)}
+										type='number'
+										name='intercom'
+										value={form.intercom}
+										placeholder='Домофон'
+										onChange={handleInputChange}
+									/>
+								</fieldset>
+							)}
 						</form>
 
 						<button className={style.submit} type='submit' form='delivery'>
 							Оформить
 						</button>
+
+						{form.touch &&
+							Object.entries(form.errors).map(([key, err]) => (
+								<p key={key}>{err}</p>
+							))}
 					</div>
 
 					<button
