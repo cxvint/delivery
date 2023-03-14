@@ -5,6 +5,7 @@ import style from './Order.module.css';
 import { orderRequestAsync } from '../../store/order/orderSlice';
 import { openModal } from '../../store/modalDelivery/modalDeliverySlice';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 export const Order = () => {
 	const { totalPrice, totalCount, orderList, orderGoods } = useSelector(
@@ -65,4 +66,11 @@ export const Order = () => {
 			</section>
 		</div>
 	);
+};
+
+Order.propTypes = {
+	totalPrice: PropTypes.number,
+	totalCount: PropTypes.number,
+	orderList: PropTypes.array,
+	orderGoods: PropTypes.array,
 };

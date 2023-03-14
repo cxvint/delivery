@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productRequestAsync } from '../../store/product/productSlice';
@@ -46,4 +47,14 @@ export const Catalog = () => {
 			</Container>
 		</section>
 	);
+};
+
+CatalogProduct.propTypes = {
+	item: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
+		price: PropTypes.number.isRequired,
+		weight: PropTypes.number.isRequired,
+		image: PropTypes.string.isRequired,
+	}).isRequired,
 };
