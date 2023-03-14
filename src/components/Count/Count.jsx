@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { addProduct, removeProduct } from '../../store/order/orderSlice';
 import style from './Count.module.css';
@@ -24,4 +25,10 @@ export const Count = ({ count, id }) => {
 			</button>
 		</div>
 	);
+};
+
+Count.propTypes = {
+	id: PropTypes.string.isRequired,
+	addProduct: PropTypes.func,
+	removeProduct: PropTypes.func,
 };

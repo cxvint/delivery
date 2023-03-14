@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import PropTypes from 'prop-types';
 import { API_URI, POSTFIX } from '../../const';
 import { calcTotal } from '../../utils/calcTotal';
 
@@ -19,12 +18,6 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
 		localStorage.setItem('order', JSON.stringify(orderList));
 	}
 	return nextAction;
-};
-
-localStorageMiddleware.propTypes = {
-	store: PropTypes.object.isRequired,
-	next: PropTypes.func.isRequired,
-	action: PropTypes.object.isRequired,
 };
 
 export const orderRequestAsync = createAsyncThunk(
@@ -113,26 +106,3 @@ const orderSlice = createSlice({
 
 export const { addProduct, removeProduct, clearOrder } = orderSlice.actions;
 export default orderSlice.reducer;
-
-orderSlice.propTypes = {
-	orderList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			count: PropTypes.number.isRequired,
-		})
-	).isRequired,
-	orderGoods: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			price: PropTypes.number.isRequired,
-			count: PropTypes.number.isRequired,
-		})
-	).isRequired,
-	totalPrice: PropTypes.number.isRequired,
-	totalCount: PropTypes.number.isRequired,
-	error: PropTypes.arrayOf(PropTypes.string).isRequired,
-	addProduct: PropTypes.func.isRequired,
-	removeProduct: PropTypes.func.isRequired,
-	clearOrder: PropTypes.func.isRequired,
-};

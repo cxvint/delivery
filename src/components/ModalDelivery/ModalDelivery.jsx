@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	changeTouch,
@@ -168,4 +169,21 @@ export const ModalDelivery = () => {
 			</div>
 		)
 	);
+};
+
+ModalDelivery.propTypes = {
+	//isOpen: PropTypes.bool.isRequired,
+	form: PropTypes.shape({
+		errors: PropTypes.object,
+		touch: PropTypes.bool,
+		name: PropTypes.string,
+		phone: PropTypes.string,
+	}),
+	orderList: PropTypes.arrayOf(PropTypes.object),
+	isOpen: PropTypes.bool,
+	updateFormValue: PropTypes.func,
+	validateForm: PropTypes.func,
+	changeTouch: PropTypes.func,
+	submitForm: PropTypes.func,
+	closeModal: PropTypes.func,
 };

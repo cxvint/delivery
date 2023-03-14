@@ -1,6 +1,7 @@
 import { API_URI } from '../../const';
 import { Count } from '../Count/Count';
 import style from './OrderGoods.module.css';
+import PropTypes from 'prop-types';
 
 export const OrderGoods = ({ title, price, image, count, id, weight }) => (
 	<li className={style.item}>
@@ -19,3 +20,12 @@ export const OrderGoods = ({ title, price, image, count, id, weight }) => (
 		<Count count={count} id={id} />
 	</li>
 );
+
+OrderGoods.propTypes = {
+	title: PropTypes.string.isRequired,
+	price: PropTypes.number.isRequired,
+	image: PropTypes.string.isRequired,
+	count: PropTypes.number.isRequired,
+	id: PropTypes.string.isRequired,
+	weight: PropTypes.number.isRequired,
+};
