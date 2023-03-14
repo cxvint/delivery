@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productRequestAsync } from '../../store/product/productSlice';
 import { CatalogProduct } from '../CatalogProduct/CatalogProduct';
@@ -12,11 +12,25 @@ export const Catalog = () => {
 	const dispatch = useDispatch();
 	const { category, activeCategory } = useSelector((state) => state.category);
 
+	const [searchTerm, setSearchTerm] = useState('');
+
 	useEffect(() => {
 		if (category.length) {
-			dispatch(productRequestAsync(category[activeCategory].title));
+			dispatch(productRequestAsync(''));
 		}
-	}, [category, activeCategory]);
+	}, [category, dispatch]);
+
+	const handleSearch = (event) => {
+		setSearchTerm(event.target.value);
+	};
+
+	const filteredProducts = products.filter((item) => {
+		if (searchTerm.trim() === '') {
+			return item.category === category[activeCategory].title;
+		} else {
+			return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+		}
+	});
 
 	return (
 		<section className={style.catalog}>
@@ -26,10 +40,17 @@ export const Catalog = () => {
 				<div className={style.wrapper}>
 					<h2 className={style.title}>{category[activeCategory]?.rus}</h2>
 
+					<input
+						type='text'
+						placeholder='Поиск по названию продукта'
+						value={searchTerm}
+						onChange={handleSearch}
+					/>
+
 					<div className={style.wrap_list}>
-						{products.length ? (
+						{filteredProducts.length ? (
 							<ul className={style.list}>
-								{products.map((item) => (
+								{filteredProducts.map((item) => (
 									<li key={item.id} className={style.item}>
 										<CatalogProduct item={item} />
 									</li>
