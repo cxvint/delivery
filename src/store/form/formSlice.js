@@ -44,7 +44,7 @@ export const submitForm = createAsyncThunk(
 );
 
 const formSlice = createSlice({
-	name: ' form',
+	name: 'form',
 	initialState,
 	reducers: {
 		updateFormValue: (state, action) => {
