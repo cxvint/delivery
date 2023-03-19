@@ -42,6 +42,46 @@
 	line-height: 16px;
 }
 
+.authButtons {
+	margin-top: 40px;
+	display: flex;
+	justify-content: space-between;
+	width: 160px;
+}
+
+.authButtons a:first-child {
+	margin-right: 30px !important;
+}
+
+.authButtons a,
+.logoutBtn {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	color: #333;
+	font-size: 14px;
+	text-align: center;
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+
+.authButtons a:hover,
+.logoutBtn:hover {
+	background-color: #333;
+	color: #fff;
+}
+
+.logoutBtn {
+	margin-left: 30px;
+	background-color: #ff5c00;
+	color: #fff;
+}
+
+.logoutBtn:hover {
+	background-color: #ff9d4d;
+}
+
 @media (min-width: 480px) {
 	.header {
 		background-size: 1400px;
