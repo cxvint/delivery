@@ -5,7 +5,7 @@
 ##### React
 
 - Пишем функциональные компоненты c хуками в приоритете над классовыми :heavy_check_mark: (классовых неу)
-- Есть четкое разделение на умные и глупые компоненты (вроде нету глупых);
+- Есть четкое разделение на умные и глупые компоненты; :heavy_check_mark:
 - Есть рендеринг списков - [Catalog](https://github.com/cxvint/delivery/blob/main/src/components/Catalog/Catalog.jsx) :heavy_check_mark:
 - Реализована хотя бы одна форма - [Форма корзины](https://github.com/cxvint/delivery/blob/main/src/components/ModalDelivery/ModalDelivery.jsx) :heavy_check_mark:
 - Есть применение Контекст API - нет
