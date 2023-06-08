@@ -8,30 +8,33 @@ import { Login } from './components/Auth/Login/Login';
 import { Register } from './components/Auth/Register';
 import { Favorites } from './components/Favorites/Favorites';
 import { store } from './store';
+import { ThemeProvider } from './components/Header/ThemeContext';
 
 export const App = () => {
 	return (
 		<Provider store={store}>
 			<Router>
-				<Header />
-				<main>
-					<Routes>
-						<Route
-							path='/'
-							element={
-								<>
-									<Navigation />
-									<Catalog />
-								</>
-							}
-						/>
-						<Route path='/signin' element={<Login />} />
-						<Route path='/signup' element={<Register />} />
-						<Route path='/favorites' element={<Favorites />} />
-					</Routes>
-				</main>
-				<footer></footer>
-				<ModalDelivery />
+				<ThemeProvider>
+					<Header />
+					<main>
+						<Routes>
+							<Route
+								path='/'
+								element={
+									<>
+										<Navigation />
+										<Catalog />
+									</>
+								}
+							/>
+							<Route path='/signin' element={<Login />} />
+							<Route path='/signup' element={<Register />} />
+							<Route path='/favorites' element={<Favorites />} />
+						</Routes>
+					</main>
+					<footer></footer>
+					<ModalDelivery />
+				</ThemeProvider>
 			</Router>
 		</Provider>
 	);
