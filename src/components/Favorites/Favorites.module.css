@@ -1,64 +1,54 @@
-.product {
+.card {
+	width: 300px;
+	border: 1px solid #ccc;
+	margin: 10px;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	margin-bottom: 20px;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-	border-radius: 4px;
-	padding: 10px;
 }
 
-.image {
-	width: 100px;
-	height: 100px;
+.card-image {
+	width: 100%;
+	height: 200px;
 	object-fit: cover;
-	margin-right: 10px;
 }
 
-.title {
+.card-body {
+	padding: 10px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.card-title {
 	font-weight: bold;
-	margin-right: 10px;
+	font-size: 1.2rem;
+	text-align: center;
+	margin-bottom: 10px;
 }
 
-.removeButton {
-	background-color: #381f1f;
-	color: #ffffff;
-	padding: 5px 10px;
+.card-description {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.card-price {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+.favorite-button {
+	margin-top: 10px;
+	padding: 5px;
+	background-color: #4caf50;
+	color: #fff;
 	border: none;
+	border-radius: 3px;
 	cursor: pointer;
-	margin-right: 10px;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-	transition: background-color 0.3s;
 }
 
-.removeButton:hover {
-	background-color: #6d3a3a;
-}
-
-.addToCartButton {
-	background-color: #004700;
-	color: #ffffff;
-	padding: 5px 10px;
-	border: none;
-	cursor: pointer;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-	transition: background-color 0.3s;
-}
-
-.addToCartButton:hover {
-	background-color: #35b035;
-}
-
-.backButton {
-	background-color: #808080;
-	color: #ffffff;
-	padding: 5px 10px;
-	border: none;
-	cursor: pointer;
-	margin-top: 20px;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-	transition: background-color 0.3s;
-}
-
-.backButton:hover {
-	background-color: #666666;
+.favorite-button:hover {
+	background-color: #388e3c;
 }
