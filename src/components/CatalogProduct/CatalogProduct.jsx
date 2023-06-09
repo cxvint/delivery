@@ -5,6 +5,22 @@ import style from './CatalogProduct.module.css';
 
 export const CatalogProduct = ({ item }) => {
 	const dispatch = useDispatch();
+
+	const favorites = useSelector((state) => state.favorite.favorites);
+	const { isLoggedIn } = useSelector((state) => state.user);
+
+	const handleAddToOrder = () => {
+		dispatch(addProduct(item));
+	};
+
+	const handleToggleFavorite = () => {
+		if (favorites.some((favorite) => favorite.id === item.id)) {
+			dispatch(removeFavorite(item));
+		} else {
+			dispatch(addFavorite(item));
+		}
+	};
+
 	return (
 		<article className={style.product}>
 			<img
@@ -24,6 +40,20 @@ export const CatalogProduct = ({ item }) => {
 
 			<p className={style.weight}>{item.weight}г</p>
 
+
+			<button className={style.add} type='button' onClick={handleAddToOrder}>
+				Добавить
+			</button>
+			{isLoggedIn && (
+				<button
+					className={style.add}
+					type='button'
+					onClick={handleToggleFavorite}>
+					{favorites.some((favorite) => favorite.id === item.id)
+						? 'Удалить из избранного'
+						: 'Добавить в избранное'}
+				</button>
+			)}
 			<button
 				className={style.add}
 				type='button'

@@ -5,6 +5,8 @@ import { calcTotal } from '../../utils/calcTotal';
 const initialState = {
 	orderList: JSON.parse(localStorage.getItem('order') || '[]'),
 	orderGoods: [],
+	favoritesList: JSON.parse(localStorage.getItem('favorites') || '[]'),
+	orderHistory: JSON.parse(localStorage.getItem('orderHistory') || '[]'),
 	totalPrice: 0,
 	totalCount: 0,
 	error: [],
@@ -75,6 +77,11 @@ const orderSlice = createSlice({
 		clearOrder: (state) => {
 			state.orderList = [];
 			state.orderGoods = [];
+
+		},
+		addToOrderHistory: (state, action) => {
+			state.orderHistory.push(action.payload);
+			localStorage.setItem('orderHistory', JSON.stringify(state.orderHistory));
 		},
 	},
 	extraReducers: (builder) => {
@@ -104,5 +111,14 @@ const orderSlice = createSlice({
 	},
 });
 
+
+export const {
+	addProduct,
+	removeProduct,
+	addToFavorites,
+	removeFromFavorites,
+	clearOrder,
+	addToOrderHistory,
+} = orderSlice.actions;
 export const { addProduct, removeProduct, clearOrder } = orderSlice.actions;
 export default orderSlice.reducer;
