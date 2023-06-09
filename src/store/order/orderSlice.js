@@ -6,6 +6,7 @@ const initialState = {
 	orderList: JSON.parse(localStorage.getItem('order') || '[]'),
 	orderGoods: [],
 	favoritesList: JSON.parse(localStorage.getItem('favorites') || '[]'),
+	orderHistory: JSON.parse(localStorage.getItem('orderHistory') || '[]'),
 	totalPrice: 0,
 	totalCount: 0,
 	error: [],
@@ -48,11 +49,16 @@ const orderSlice = createSlice({
 
 			if (productOrderList) {
 				productOrderList.count += 1;
+
+				const productOrderGoods = state.orderGoods.find(
+					(item) => item.id === action.payload.id
+				);
+
+				productOrderGoods.count = productOrderList.count;
+				[state.totalCount, state.totalPrice] = calcTotal(state.orderGoods);
 			} else {
 				state.orderList.push({ ...action.payload, count: 1 });
 			}
-
-			[state.totalCount, state.totalPrice] = calcTotal(state.orderList);
 		},
 		removeProduct: (state, action) => {
 			const productOrderList = state.orderList.find(
@@ -61,6 +67,13 @@ const orderSlice = createSlice({
 
 			if (productOrderList.count > 1) {
 				productOrderList.count -= 1;
+
+				const productOrderGoods = state.orderGoods.find(
+					(item) => item.id === action.payload.id
+				);
+
+				productOrderGoods.count = productOrderList.count;
+				[state.totalCount, state.totalPrice] = calcTotal(state.orderGoods);
 			} else {
 				state.orderList = state.orderList.filter(
 					(item) => item.id !== action.payload.id
@@ -86,14 +99,16 @@ const orderSlice = createSlice({
 		clearOrder: (state) => {
 			state.orderList = [];
 			state.orderGoods = [];
-			state.totalPrice = 0;
-			state.totalCount = 0;
+		},
+		addToOrderHistory: (state, action) => {
+			state.orderHistory.push(action.payload);
+			localStorage.setItem('orderHistory', JSON.stringify(state.orderHistory));
 		},
 	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(orderRequestAsync.pending, (state) => {
-				state.error = [];
+				state.error = '';
 			})
 			.addCase(orderRequestAsync.fulfilled, (state, action) => {
 				const orderGoods = state.orderList.map((item) => {
@@ -106,7 +121,7 @@ const orderSlice = createSlice({
 					return product;
 				});
 
-				state.error = [];
+				state.error = '';
 				state.orderGoods = orderGoods;
 
 				[state.totalCount, state.totalPrice] = calcTotal(orderGoods);
@@ -123,5 +138,6 @@ export const {
 	addToFavorites,
 	removeFromFavorites,
 	clearOrder,
+	addToOrderHistory,
 } = orderSlice.actions;
 export default orderSlice.reducer;

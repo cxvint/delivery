@@ -9,6 +9,7 @@ import { Register } from './components/Auth/Register';
 import { Favorites } from './components/Favorites/Favorites';
 import { store } from './store';
 import { ThemeProvider } from './components/Header/ThemeContext';
+import { HistoryOrder } from './components/HistoryOrder/HistoryOrder';
 
 export const App = () => {
 	return (
@@ -30,6 +31,7 @@ export const App = () => {
 							<Route path='/signin' element={<Login />} />
 							<Route path='/signup' element={<Register />} />
 							<Route path='/favorites' element={<Favorites />} />
+							<Route path='/history' element={<HistoryOrder />} />
 						</Routes>
 					</main>
 					<footer></footer>

@@ -11,6 +11,7 @@ import style from './CatalogProduct.module.css';
 export const CatalogProduct = ({ item }) => {
 	const dispatch = useDispatch();
 	const favorites = useSelector((state) => state.favorite.favorites);
+	const { isLoggedIn } = useSelector((state) => state.user);
 
 	const handleAddToOrder = () => {
 		dispatch(addProduct(item));
@@ -47,14 +48,16 @@ export const CatalogProduct = ({ item }) => {
 				Добавить
 			</button>
 
-			<button
-				className={style.add}
-				type='button'
-				onClick={handleToggleFavorite}>
-				{favorites.some((favorite) => favorite.id === item.id)
-					? 'Удалить из избранного'
-					: 'Добавить в избранное'}
-			</button>
+			{isLoggedIn && (
+				<button
+					className={style.add}
+					type='button'
+					onClick={handleToggleFavorite}>
+					{favorites.some((favorite) => favorite.id === item.id)
+						? 'Удалить из избранного'
+						: 'Добавить в избранное'}
+				</button>
+			)}
 		</article>
 	);
 };

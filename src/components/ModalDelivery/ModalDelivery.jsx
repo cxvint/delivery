@@ -7,8 +7,11 @@ import {
 	updateFormValue,
 	validateForm,
 } from '../../store/form/formSlice';
+import { addToOrderHistory } from '../../store/order/orderSlice';
 import { closeModal } from '../../store/modalDelivery/modalDeliverySlice';
 import style from './ModalDelivery.module.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ModalDelivery = () => {
 	const { isOpen } = useSelector((state) => state.modal);
@@ -34,6 +37,8 @@ export const ModalDelivery = () => {
 
 		if (Object.keys(form.errors).length === 0 && form.touch) {
 			dispatch(submitForm({ ...form, orderList }));
+			dispatch(addToOrderHistory({ ...form, orderList }));
+			toast.success('Ваш заказ оформлен');
 		}
 	};
 
@@ -172,7 +177,6 @@ export const ModalDelivery = () => {
 };
 
 ModalDelivery.propTypes = {
-	//isOpen: PropTypes.bool.isRequired,
 	form: PropTypes.shape({
 		errors: PropTypes.object,
 		touch: PropTypes.bool,
