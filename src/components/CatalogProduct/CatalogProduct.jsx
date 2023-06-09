@@ -1,29 +1,10 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../store/order/orderSlice';
-import {
-	addFavorite,
-	removeFavorite,
-} from '../../store/favorites/favoriteSlice';
+import { useDispatch } from 'react-redux';
 import { API_URI } from '../../const';
+import { addProduct } from '../../store/order/orderSlice';
 import style from './CatalogProduct.module.css';
 
 export const CatalogProduct = ({ item }) => {
 	const dispatch = useDispatch();
-	const favorites = useSelector((state) => state.favorite.favorites);
-
-	const handleAddToOrder = () => {
-		dispatch(addProduct(item));
-	};
-
-	const handleToggleFavorite = () => {
-		if (favorites.some((favorite) => favorite.id === item.id)) {
-			dispatch(removeFavorite(item));
-		} else {
-			dispatch(addFavorite(item));
-		}
-	};
-
 	return (
 		<article className={style.product}>
 			<img
@@ -43,17 +24,13 @@ export const CatalogProduct = ({ item }) => {
 
 			<p className={style.weight}>{item.weight}г</p>
 
-			<button className={style.add} type='button' onClick={handleAddToOrder}>
-				Добавить
-			</button>
-
 			<button
 				className={style.add}
 				type='button'
-				onClick={handleToggleFavorite}>
-				{favorites.some((favorite) => favorite.id === item.id)
-					? 'Удалить из избранного'
-					: 'Добавить в избранное'}
+				onClick={() => {
+					dispatch(addProduct({ id: item.id }));
+				}}>
+				Добавить
 			</button>
 		</article>
 	);

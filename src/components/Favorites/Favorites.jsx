@@ -1,71 +1,31 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-	removeFavorite,
-	selectFavorites,
-} from '../../store/favorites/favoriteSlice';
-import { addProduct } from '../../store/order/orderSlice';
-import { API_URI } from '../../const';
+import { useSelector } from 'react-redux';
+import { selectFavoriteItems } from '../../store/auth/userSlice';
+import { FavoriteItem } from './FavoriteItem/FavoriteItem';
+import { Container } from '../Container/Container';
 import style from './Favorites.module.css';
-import { useNavigate } from 'react-router-dom';
 
 export const Favorites = () => {
-	const dispatch = useDispatch();
-	const favorites = useSelector(selectFavorites);
-	const [successMessage, setSuccessMessage] = useState('');
-	const navigate = useNavigate();
-
-	const handleRemoveFavorite = (productId) => {
-		dispatch(removeFavorite(productId));
-	};
-
-	const handleAddToOrder = (product) => {
-		dispatch(addProduct(product));
-		setSuccessMessage('Товар успешно добавлен в корзину');
-		setTimeout(() => {
-			setSuccessMessage('');
-		}, 2000);
-	};
-
-	if (favorites.length === 0) {
-		setTimeout(() => {
-			navigate('/');
-		}, 3000);
-	}
+	const favoriteItems = useSelector(selectFavoriteItems);
 
 	return (
-		<div>
-			<h2>Избранное</h2>
-			{successMessage && <p>{successMessage}</p>}
-			{favorites.length > 0 ? (
-				<>
-					{favorites.map((product) => (
-						<div key={product.id} className={style.product}>
-							<img
-								src={`${API_URI}/${product.image}`}
-								alt={product.title}
-								className={style.image}
-							/>
-							<p className={style.title}>{product.title}</p>
-							<button
-								className={style.removeButton}
-								onClick={() => handleRemoveFavorite(product.id)}>
-								Удалить из избранного
-							</button>
-							<button
-								className={style.addToCartButton}
-								onClick={() => handleAddToOrder(product)}>
-								Добавить в корзину
-							</button>
-						</div>
-					))}
-					<button className={style.backButton} onClick={() => navigate('/')}>
-						Назад
-					</button>
-				</>
-			) : (
-				<p>Избранное пусто. Переход на главную страницу через 3 секунды...</p>
-			)}
-		</div>
+		<section className={style.favorites}>
+			<Container className={style.container}>
+				<h2 className={style.title}>Избранное</h2>
+
+				<div className={style.wrap_list}>
+					{favoriteItems.length ? (
+						<ul className={style.list}>
+							{favoriteItems.map((item) => (
+								<li key={item.id} className={style.item}>
+									<FavoriteItem item={item} />
+								</li>
+							))}
+						</ul>
+					) : (
+						<p className={style.empty}>Ваше избранное пусто</p>
+					)}
+				</div>
+			</Container>
+		</section>
 	);
 };
