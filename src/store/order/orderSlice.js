@@ -19,12 +19,6 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
 		const orderList = store.getState().order.orderList;
 		localStorage.setItem('order', JSON.stringify(orderList));
 	}
-
-	if (nextAction.type.startsWith('order/')) {
-		const favoritesList = store.getState().order.favoritesList;
-		localStorage.setItem('favorites', JSON.stringify(favoritesList));
-	}
-
 	return nextAction;
 };
 
@@ -79,26 +73,11 @@ const orderSlice = createSlice({
 					(item) => item.id !== action.payload.id
 				);
 			}
-
-			[state.totalCount, state.totalPrice] = calcTotal(state.orderList);
-		},
-		addToFavorites: (state, action) => {
-			const productFavoritesList = state.favoritesList.find(
-				(item) => item.id === action.payload.id
-			);
-
-			if (!productFavoritesList) {
-				state.favoritesList.push(action.payload);
-			}
-		},
-		removeFromFavorites: (state, action) => {
-			state.favoritesList = state.favoritesList.filter(
-				(item) => item.id !== action.payload.id
-			);
 		},
 		clearOrder: (state) => {
 			state.orderList = [];
 			state.orderGoods = [];
+
 		},
 		addToOrderHistory: (state, action) => {
 			state.orderHistory.push(action.payload);
@@ -132,6 +111,7 @@ const orderSlice = createSlice({
 	},
 });
 
+
 export const {
 	addProduct,
 	removeProduct,
@@ -140,4 +120,5 @@ export const {
 	clearOrder,
 	addToOrderHistory,
 } = orderSlice.actions;
+export const { addProduct, removeProduct, clearOrder } = orderSlice.actions;
 export default orderSlice.reducer;

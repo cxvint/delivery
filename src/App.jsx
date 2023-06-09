@@ -11,10 +11,12 @@ import { store } from './store';
 import { ThemeProvider } from './components/Header/ThemeContext';
 import { HistoryOrder } from './components/HistoryOrder/HistoryOrder';
 
+
 export const App = () => {
 	return (
 		<Provider store={store}>
 			<Router>
+
 				<ThemeProvider>
 					<Header />
 					<main>
@@ -37,6 +39,25 @@ export const App = () => {
 					<footer></footer>
 					<ModalDelivery />
 				</ThemeProvider>
+				<Header />
+				<main>
+					<Routes>
+						<Route
+							path='/'
+							element={
+								<>
+									<Navigation />
+									<Catalog />
+								</>
+							}
+						/>
+						<Route path='/signin' element={<Login />} />
+						<Route path='/signup' element={<Register />} />
+						<Route path='/favorites' element={<Favorites />} />
+					</Routes>
+				</main>
+				<footer></footer>
+				<ModalDelivery />
 			</Router>
 		</Provider>
 	);
