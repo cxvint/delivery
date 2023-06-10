@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import categoryReducer from './category/categorySlice';
-import productReducer from './product/productSlice';
-import orderReducer, { localStorageMiddleware } from './order/orderSlice';
+import productReducer, { productApi } from './product/productSlice';
+import orderReducer from './order/orderSlice';
 import favoriteReducer from './favorites/favoriteSlice';
 import modalReducer from './modalDelivery/modalDeliverySlice';
 import formReducer from './form/formSlice';
@@ -16,8 +16,8 @@ export const store = configureStore({
 		modal: modalReducer,
 		form: formReducer,
 		user: userReducer,
+		[productApi.reducerPath]: productApi.reducer,
 	},
-
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(localStorageMiddleware),
+		getDefaultMiddleware().concat(productApi.middleware),
 });
