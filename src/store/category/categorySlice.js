@@ -12,7 +12,6 @@ export const categoryRequestAsync = createAsyncThunk('category/fetch', () =>
 		.then((req) => req.json())
 		.catch((error) => ({ error }))
 );
-
 const categorySlice = createSlice({
 	name: 'category',
 	initialState,

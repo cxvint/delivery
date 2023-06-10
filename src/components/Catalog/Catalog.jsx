@@ -79,3 +79,5 @@ CatalogProduct.propTypes = {
 		image: PropTypes.string.isRequired,
 	}).isRequired,
 };
+
+export default Catalog;

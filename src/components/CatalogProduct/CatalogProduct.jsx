@@ -1,11 +1,15 @@
-import { useDispatch } from 'react-redux';
-import { API_URI } from '../../const';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../store/order/orderSlice';
+import {
+	addFavorite,
+	removeFavorite,
+} from '../../store/favorites/favoriteSlice';
+import { API_URI } from '../../const';
 import style from './CatalogProduct.module.css';
 
 export const CatalogProduct = ({ item }) => {
 	const dispatch = useDispatch();
-
 	const favorites = useSelector((state) => state.favorite.favorites);
 	const { isLoggedIn } = useSelector((state) => state.user);
 
@@ -40,10 +44,10 @@ export const CatalogProduct = ({ item }) => {
 
 			<p className={style.weight}>{item.weight}г</p>
 
-
 			<button className={style.add} type='button' onClick={handleAddToOrder}>
 				Добавить
 			</button>
+
 			{isLoggedIn && (
 				<button
 					className={style.add}
@@ -54,14 +58,6 @@ export const CatalogProduct = ({ item }) => {
 						: 'Добавить в избранное'}
 				</button>
 			)}
-			<button
-				className={style.add}
-				type='button'
-				onClick={() => {
-					dispatch(addProduct({ id: item.id }));
-				}}>
-				Добавить
-			</button>
 		</article>
 	);
 };

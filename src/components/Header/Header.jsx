@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
 import style from './Header.module.css';
 import logo from '../../assets/img/logo.svg';
 import { Container } from '../Container/Container';
@@ -5,11 +7,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/auth/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Switch from 'react-switch';
 
 export const Header = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { isLoggedIn, user } = useSelector((state) => state.user);
+	const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
 
 	useEffect(() => {
 		const storedUser = localStorage.getItem('user');
@@ -32,7 +36,7 @@ export const Header = () => {
 	}, [isLoggedIn, user]);
 
 	return (
-		<header className={style.header}>
+		<header className={`${style.header} ${isDarkMode ? style.darkMode : ''}`}>
 			<Container>
 				<div className={style.container}>
 					<Link to='/'>
@@ -73,6 +77,20 @@ export const Header = () => {
 					</div>
 				</div>
 			</Container>
+
+			<Switch
+				className={style.themeSwitch}
+				onChange={toggleDarkMode}
+				checked={isDarkMode}
+				onColor='#282c34'
+				offColor='#888'
+				onHandleColor='#fff'
+				offHandleColor='#fff'
+				uncheckedIcon={false}
+				checkedIcon={false}
+				height={24}
+				width={48}
+			/>
 		</header>
 	);
 };
