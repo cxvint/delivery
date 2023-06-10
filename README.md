@@ -23,3 +23,6 @@
   [formSlice](https://github.com/cxvint/delivery/blob/main/src/store/form/formSlice.js) :heavy_check_mark:
 - Есть хотя бы одна кастомная мидлвара - есть [orderSlice](https://github.com/cxvint/delivery/blob/main/src/store/order/orderSlice.js) :heavy_check_mark:
 - Используется RTK Query - [productApi](https://github.com/cxvint/delivery/blob/main/src/store/product/productApi.js)
+
+##### Backend
+-написан сервер [index.js](https://github.com/cxvint/api_delivery/blob/main/index.js)
