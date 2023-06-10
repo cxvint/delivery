@@ -9,7 +9,7 @@ import { Favorites } from './components/Favorites/Favorites';
 import { store } from './store';
 import { ThemeProvider } from './components/Header/ThemeContext';
 import { HistoryOrder } from './components/HistoryOrder/HistoryOrder';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 const LazyNavigation = lazy(() => import('./components/Navigation/Navigation'));
 const LazyCatalog = lazy(() => import('./components/Catalog/Catalog'));
