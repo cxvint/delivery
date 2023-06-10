@@ -9,6 +9,7 @@
 - Есть рендеринг списков - [Catalog](https://github.com/cxvint/delivery/blob/main/src/components/Catalog/Catalog.jsx) :heavy_check_mark:
 - Реализована хотя бы одна форма - [Форма заказа](https://github.com/cxvint/delivery/blob/main/src/components/ModalDelivery/ModalDelivery.jsx) :heavy_check_mark:
 - Есть применение Контекст API - [тёмная тема в Header](https://github.com/cxvint/delivery/blob/main/src/components/Header/Header.jsx)
+- Есть применение предохранителя - [ErrorBoundary](https://github.com/cxvint/delivery/blob/main/src/components/ErrorBoundary/ErrorBoundary.jsx)
 - Есть хотя бы один кастомный хук - [useLogin](https://github.com/cxvint/delivery/blob/main/src/components/Login/useLogin.jsx)
 - Хотя бы несколько компонентов используют PropTypes - есть [Order](https://github.com/cxvint/delivery/blob/main/src/components/Order/Order.jsx)
   [OrderGoods](https://github.com/cxvint/delivery/blob/main/src/components/OrderGoods/OrderGoods.jsx) :heavy_check_mark:
