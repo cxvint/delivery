@@ -1,15 +1,17 @@
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { Catalog } from './components/Catalog/Catalog';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import { Header } from './components/Header/Header';
 import { ModalDelivery } from './components/ModalDelivery/ModalDelivery';
-import { Navigation } from './components/Navigation/Navigation';
 import { Login } from './components/Auth/Login/Login';
 import { Register } from './components/Auth/Register';
 import { Favorites } from './components/Favorites/Favorites';
 import { store } from './store';
 import { ThemeProvider } from './components/Header/ThemeContext';
 import { HistoryOrder } from './components/HistoryOrder/HistoryOrder';
+
+const LazyNavigation = lazy(() => import('./components/Navigation/Navigation'));
+const LazyCatalog = lazy(() => import('./components/Catalog/Catalog'));
 
 export const App = () => {
 	return (
@@ -22,10 +24,10 @@ export const App = () => {
 							<Route
 								path='/'
 								element={
-									<>
-										<Navigation />
-										<Catalog />
-									</>
+									<Suspense fallback={<div>Loading...</div>}>
+										<LazyNavigation />
+										<LazyCatalog />
+									</Suspense>
 								}
 							/>
 							<Route path='/signin' element={<Login />} />
