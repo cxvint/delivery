@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import categoryReducer from './category/categorySlice';
-import productReducer, { productApi } from './product/productSlice';
+import productReducer from './product/productSlice';
+import { productApi } from './product/productApi';
 import orderReducer from './order/orderSlice';
 import favoriteReducer from './favorites/favoriteSlice';
 import modalReducer from './modalDelivery/modalDeliverySlice';

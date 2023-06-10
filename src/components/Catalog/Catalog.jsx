@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	fetchProducts,
-	useFetchProductsQuery,
-} from '../../store/product/productSlice';
+import { fetchProducts } from '../../store/product/productSlice';
+import { useFetchProductsQuery } from '../../store/product/productApi';
 import { CatalogProduct } from '../CatalogProduct/CatalogProduct';
 import { Container } from '../Container/Container';
 import { Order } from '../Order/Order';
