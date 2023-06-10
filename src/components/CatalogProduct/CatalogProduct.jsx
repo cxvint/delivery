@@ -19,7 +19,7 @@ export const CatalogProduct = ({ item }) => {
 
 	const handleToggleFavorite = () => {
 		if (favorites.some((favorite) => favorite.id === item.id)) {
-			dispatch(removeFavorite(item));
+			dispatch(removeFavorite(item.id));
 		} else {
 			dispatch(addFavorite(item));
 		}

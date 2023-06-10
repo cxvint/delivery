@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { productRequestAsync } from '../../store/product/productSlice';
+import { fetchProducts } from '../../store/product/productSlice';
+import { useFetchProductsQuery } from '../../store/product/productApi';
 import { CatalogProduct } from '../CatalogProduct/CatalogProduct';
 import { Container } from '../Container/Container';
 import { Order } from '../Order/Order';
 import style from './Catalog.module.css';
 
 export const Catalog = () => {
-	const { products, flagProduct } = useSelector((state) => state.product);
 	const dispatch = useDispatch();
 	const { category, activeCategory } = useSelector((state) => state.category);
 
@@ -16,9 +15,11 @@ export const Catalog = () => {
 
 	useEffect(() => {
 		if (category.length) {
-			dispatch(productRequestAsync(''));
+			dispatch(fetchProducts(category[activeCategory].title));
 		}
-	}, [category, dispatch]);
+	}, [category, activeCategory, dispatch]);
+
+	const { data: products = [], isLoading, isError } = useFetchProductsQuery('');
 
 	const handleSearch = (event) => {
 		setSearchTerm(event.target.value);
@@ -48,7 +49,11 @@ export const Catalog = () => {
 					/>
 
 					<div className={style.wrap_list}>
-						{filteredProducts.length ? (
+						{isLoading ? (
+							<p>Loading...</p>
+						) : isError ? (
+							<p>Error: Unable to fetch products.</p>
+						) : filteredProducts.length ? (
 							<ul className={style.list}>
 								{filteredProducts.map((item) => (
 									<li key={item.id} className={style.item}>
@@ -57,27 +62,15 @@ export const Catalog = () => {
 								))}
 							</ul>
 						) : (
-							flagProduct && (
-								<p className={style.empty}>
-									К сожалению товаров данной категории нет
-								</p>
-							)
+							<p className={style.empty}>
+								К сожалению товаров данной категории нет
+							</p>
 						)}
 					</div>
 				</div>
 			</Container>
 		</section>
 	);
-};
-
-CatalogProduct.propTypes = {
-	item: PropTypes.shape({
-		id: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired,
-		price: PropTypes.number.isRequired,
-		weight: PropTypes.number.isRequired,
-		image: PropTypes.string.isRequired,
-	}).isRequired,
 };
 
 export default Catalog;
