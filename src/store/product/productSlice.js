@@ -30,6 +30,7 @@ const productSlice = createSlice({
 		builder.addCase(fetchProducts.fulfilled, (state, action) => {
 			state.isLoading = false;
 			productAdapter.setAll(state, action.payload);
+			console.log('Updated state:', state);
 		});
 		builder.addCase(fetchProducts.rejected, (state) => {
 			state.isLoading = false;
