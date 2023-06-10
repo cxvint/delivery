@@ -9,6 +9,7 @@ import { Favorites } from './components/Favorites/Favorites';
 import { store } from './store';
 import { ThemeProvider } from './components/Header/ThemeContext';
 import { HistoryOrder } from './components/HistoryOrder/HistoryOrder';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const LazyNavigation = lazy(() => import('./components/Navigation/Navigation'));
 const LazyCatalog = lazy(() => import('./components/Catalog/Catalog'));
@@ -20,21 +21,23 @@ export const App = () => {
 				<ThemeProvider>
 					<Header />
 					<main>
-						<Routes>
-							<Route
-								path='/'
-								element={
-									<Suspense fallback={<div>Loading...</div>}>
-										<LazyNavigation />
-										<LazyCatalog />
-									</Suspense>
-								}
-							/>
-							<Route path='/signin' element={<Login />} />
-							<Route path='/signup' element={<Register />} />
-							<Route path='/favorites' element={<Favorites />} />
-							<Route path='/history' element={<HistoryOrder />} />
-						</Routes>
+						<ErrorBoundary>
+							<Routes>
+								<Route
+									path='/'
+									element={
+										<Suspense fallback={<div>Loading...</div>}>
+											<LazyNavigation />
+											<LazyCatalog />
+										</Suspense>
+									}
+								/>
+								<Route path='/signin' element={<Login />} />
+								<Route path='/signup' element={<Register />} />
+								<Route path='/favorites' element={<Favorites />} />
+								<Route path='/history' element={<HistoryOrder />} />
+							</Routes>
+						</ErrorBoundary>
 					</main>
 					<footer></footer>
 					<ModalDelivery />
