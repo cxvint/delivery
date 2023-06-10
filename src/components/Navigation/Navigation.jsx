@@ -18,9 +18,6 @@ export const Navigation = () => {
 		dispatch(categoryRequestAsync());
 	}, []);
 
-	console.log('category:', category);
-	console.log('activeCategory:', activeCategory);
-
 	return (
 		<nav className={style.navigation}>
 			<Container className={style.container}>
@@ -45,3 +42,5 @@ export const Navigation = () => {
 		</nav>
 	);
 };
+
+export default Navigation;
