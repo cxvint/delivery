@@ -5,7 +5,6 @@ import { calcTotal } from '../../utils/calcTotal';
 const initialState = {
 	orderList: JSON.parse(localStorage.getItem('order') || '[]'),
 	orderGoods: [],
-	favoritesList: JSON.parse(localStorage.getItem('favorites') || '[]'),
 	orderHistory: JSON.parse(localStorage.getItem('orderHistory') || '[]'),
 	totalPrice: 0,
 	totalCount: 0,
@@ -18,11 +17,6 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
 	if (nextAction.type.startsWith('order/')) {
 		const orderList = store.getState().order.orderList;
 		localStorage.setItem('order', JSON.stringify(orderList));
-	}
-
-	if (nextAction.type.startsWith('order/')) {
-		const favoritesList = store.getState().order.favoritesList;
-		localStorage.setItem('favorites', JSON.stringify(favoritesList));
 	}
 
 	return nextAction;
@@ -82,20 +76,6 @@ const orderSlice = createSlice({
 
 			[state.totalCount, state.totalPrice] = calcTotal(state.orderList);
 		},
-		addToFavorites: (state, action) => {
-			const productFavoritesList = state.favoritesList.find(
-				(item) => item.id === action.payload.id
-			);
-
-			if (!productFavoritesList) {
-				state.favoritesList.push(action.payload);
-			}
-		},
-		removeFromFavorites: (state, action) => {
-			state.favoritesList = state.favoritesList.filter(
-				(item) => item.id !== action.payload.id
-			);
-		},
 		clearOrder: (state) => {
 			state.orderList = [];
 			state.orderGoods = [];
@@ -103,6 +83,10 @@ const orderSlice = createSlice({
 		addToOrderHistory: (state, action) => {
 			state.orderHistory.push(action.payload);
 			localStorage.setItem('orderHistory', JSON.stringify(state.orderHistory));
+		},
+		clearOrderHistory: (state) => {
+			state.orderHistory = [];
+			localStorage.removeItem('orderHistory');
 		},
 	},
 	extraReducers: (builder) => {
@@ -135,9 +119,8 @@ const orderSlice = createSlice({
 export const {
 	addProduct,
 	removeProduct,
-	addToFavorites,
-	removeFromFavorites,
 	clearOrder,
 	addToOrderHistory,
+	clearOrderHistory,
 } = orderSlice.actions;
 export default orderSlice.reducer;

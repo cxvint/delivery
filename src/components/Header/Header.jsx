@@ -4,6 +4,8 @@ import style from './Header.module.css';
 import logo from '../../assets/img/logo.svg';
 import { Container } from '../Container/Container';
 import { useSelector, useDispatch } from 'react-redux';
+import { clearOrderHistory } from '../../store/order/orderSlice';
+import { clearFavorites } from '../../store/favorites/favoriteSlice';
 import { logout } from '../../store/auth/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -23,6 +25,8 @@ export const Header = () => {
 	}, [dispatch]);
 
 	const handleLogout = () => {
+		dispatch(clearOrderHistory());
+		dispatch(clearFavorites());
 		dispatch(logout());
 		navigate('/');
 	};
