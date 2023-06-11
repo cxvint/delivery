@@ -1,43 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../store/auth/userSlice';
 import { FormInput } from './FormComponents/FormInput';
 import { FormButton } from './FormComponents/FormButton';
 import { useNavigate } from 'react-router-dom';
 import style from './Register.module.css';
+import { useRegister } from './useRegister';
 
 export const Register = () => {
-	const [userData, setUserData] = useState({
-		name: '',
-		email: '',
-		password: '',
-	});
-	const { name, email, password } = userData;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { name, email, password, handleChange, handleRegister } = useRegister();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (!name || !email || !password) {
-			alert('Please fill in all required fields');
-			return;
-		}
+		handleRegister();
 
-		localStorage.setItem('email', email);
-		localStorage.setItem('name', name);
-		localStorage.setItem('password', password);
-		const resultAction = await dispatch(register(userData));
+		const resultAction = await dispatch(register({ name, email, password }));
 		const result = resultAction.payload;
 
 		if (result) {
 			navigate('/');
 		}
-	};
-
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setUserData({ ...userData, [name]: value });
 	};
 
 	return (
