@@ -7,6 +7,9 @@ export const productApi = createApi({
 	endpoints: (builder) => ({
 		fetchProducts: builder.query({
 			query: (category) => `?category=${category}`,
+			transformResponse: (response) => {
+				return response;
+			},
 		}),
 	}),
 });

@@ -47,7 +47,9 @@ export const CatalogProduct = ({ item }) => {
 				{item.price}
 				<span className='currency'>&nbsp;₽</span>
 			</p>
-
+			<h3 className={style.title}>
+				<strong>{item.title}</strong>
+			</h3>
 			<p className={style.weight}>{item.weight}г</p>
 
 			<button className={style.add} onClick={handleOpenDetails}>
