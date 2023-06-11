@@ -6,7 +6,7 @@ import { Container } from '../Container/Container';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearOrderHistory } from '../../store/order/orderSlice';
 import { clearFavorites } from '../../store/favorites/favoriteSlice';
-import { logout } from '../../store/auth/userSlice';
+import { login, logout } from '../../store/auth/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Switch from 'react-switch';
@@ -17,13 +17,6 @@ export const Header = () => {
 	const { isLoggedIn, user } = useSelector((state) => state.user);
 	const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
 
-	useEffect(() => {
-		const storedUser = localStorage.getItem('user');
-		if (storedUser) {
-			dispatch({ type: 'user/login', payload: JSON.parse(storedUser) });
-		}
-	}, [dispatch]);
-
 	const handleLogout = () => {
 		dispatch(clearOrderHistory());
 		dispatch(clearFavorites());
@@ -33,11 +26,11 @@ export const Header = () => {
 
 	useEffect(() => {
 		if (isLoggedIn) {
-			localStorage.setItem('user', JSON.stringify(user));
+			dispatch(login(user));
 		} else {
-			localStorage.removeItem('user');
+			dispatch(logout());
 		}
-	}, [isLoggedIn, user]);
+	}, [dispatch, isLoggedIn, user]);
 
 	return (
 		<header className={`${style.header} ${isDarkMode ? style.darkMode : ''}`}>
