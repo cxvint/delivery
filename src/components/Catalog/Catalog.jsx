@@ -20,7 +20,6 @@ export const Catalog = () => {
 	}, [category, activeCategory, dispatch]);
 
 	const { data: products = [], isLoading, isError } = useFetchProductsQuery('');
-
 	const handleSearch = (event) => {
 		setSearchTerm(event.target.value);
 	};
