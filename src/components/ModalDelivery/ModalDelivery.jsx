@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,9 +39,16 @@ export const ModalDelivery = () => {
 		if (Object.keys(form.errors).length === 0 && form.touch) {
 			dispatch(submitForm({ ...form, orderList }));
 			dispatch(addToOrderHistory({ ...form, orderList }));
-			toast.success('Ваш заказ оформлен');
 		}
 	};
+
+	const status = form.status;
+
+	useEffect(() => {
+		if (status === 'success') {
+			toast.success('Ваш заказ оформлен');
+		}
+	}, [status]);
 
 	return (
 		isOpen && (
