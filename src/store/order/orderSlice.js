@@ -3,23 +3,12 @@ import { API_URI, POSTFIX } from '../../const';
 import { calcTotal } from '../../utils/calcTotal';
 
 const initialState = {
-	orderList: JSON.parse(localStorage.getItem('order') || '[]'),
+	orderList: [],
 	orderGoods: [],
-	orderHistory: JSON.parse(localStorage.getItem('orderHistory') || '[]'),
+	orderHistory: [],
 	totalPrice: 0,
 	totalCount: 0,
 	error: [],
-};
-
-export const localStorageMiddleware = (store) => (next) => (action) => {
-	const nextAction = next(action);
-
-	if (nextAction.type.startsWith('order/')) {
-		const orderList = store.getState().order.orderList;
-		localStorage.setItem('order', JSON.stringify(orderList));
-	}
-
-	return nextAction;
 };
 
 export const orderRequestAsync = createAsyncThunk(
@@ -82,11 +71,9 @@ const orderSlice = createSlice({
 		},
 		addToOrderHistory: (state, action) => {
 			state.orderHistory.push(action.payload);
-			localStorage.setItem('orderHistory', JSON.stringify(state.orderHistory));
 		},
 		clearOrderHistory: (state) => {
 			state.orderHistory = [];
-			localStorage.removeItem('orderHistory');
 		},
 	},
 	extraReducers: (builder) => {
