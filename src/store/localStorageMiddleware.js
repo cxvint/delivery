@@ -10,6 +10,23 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
 		localStorage.setItem('isLoggedIn', isLoggedIn);
 	}
 
+	if (action.type === 'favorites/loadFavoritesFromLocalStorage') {
+		const storedFavorites = localStorage.getItem('favorites');
+		if (storedFavorites) {
+			const favorites = JSON.parse(storedFavorites);
+			store.dispatch({ type: 'favorites/setFavorites', payload: favorites });
+		}
+	}
+
+	if (
+		action.type === 'favorites/addFavorite' ||
+		action.type === 'favorites/removeFavorite' ||
+		action.type === 'favorites/clearFavorites'
+	) {
+		const favorites = store.getState().favorites.favorites;
+		localStorage.setItem('favorites', JSON.stringify(favorites));
+	}
+
 	if (
 		nextAction &&
 		typeof nextAction.type === 'string' &&
