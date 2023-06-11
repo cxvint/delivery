@@ -5,13 +5,13 @@ import { addProduct } from '../../store/order/orderSlice';
 import {
 	addFavorite,
 	removeFavorite,
-} from '../../store/favorites/favoriteSlice';
+} from '../../store/favorites/favoritesSlice';
 import { API_URI } from '../../const';
 import style from './CatalogProduct.module.css';
 
 export const CatalogProduct = ({ item }) => {
 	const dispatch = useDispatch();
-	const favorites = useSelector((state) => state.favorite.favorites);
+	const favorites = useSelector((state) => state.favorites.favorites);
 	const { isLoggedIn } = useSelector((state) => state.user);
 	const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 

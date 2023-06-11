@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	removeFavorite,
 	selectFavorites,
-} from '../../store/favorites/favoriteSlice';
+} from '../../store/favorites/favoritesSlice';
 import { addProduct } from '../../store/order/orderSlice';
 import { API_URI } from '../../const';
 import style from './Favorites.module.css';
@@ -14,6 +14,10 @@ export const Favorites = () => {
 	const favorites = useSelector(selectFavorites);
 	const [successMessage, setSuccessMessage] = useState('');
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		dispatch({ type: 'favorites/loadFavoritesFromLocalStorage' });
+	}, [dispatch]);
 
 	const handleRemoveFavorite = (productId) => {
 		dispatch(removeFavorite(productId));

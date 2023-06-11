@@ -3,7 +3,7 @@ import categoryReducer from './category/categorySlice';
 import productReducer from './product/productSlice';
 import { productApi } from './product/productApi';
 import orderReducer from './order/orderSlice';
-import favoriteReducer from './favorites/favoriteSlice';
+import favoritesReducer from './favorites/favoritesSlice';
 import modalReducer from './modalDelivery/modalDeliverySlice';
 import formReducer from './form/formSlice';
 import userReducer from './auth/userSlice';
@@ -14,7 +14,7 @@ export const store = configureStore({
 		category: categoryReducer,
 		product: productReducer,
 		order: orderReducer,
-		favorite: favoriteReducer,
+		favorites: favoritesReducer,
 		modal: modalReducer,
 		form: formReducer,
 		user: userReducer,

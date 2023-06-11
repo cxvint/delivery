@@ -5,7 +5,7 @@ import logo from '../../assets/img/logo.svg';
 import { Container } from '../Container/Container';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearOrderHistory } from '../../store/order/orderSlice';
-import { clearFavorites } from '../../store/favorites/favoriteSlice';
+import { clearFavorites } from '../../store/favorites/favoritesSlice';
 import { login, logout } from '../../store/auth/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
