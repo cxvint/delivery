@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ProductDetails } from '../ProductDetails/ProductDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../store/order/orderSlice';
 import {
@@ -12,6 +13,7 @@ export const CatalogProduct = ({ item }) => {
 	const dispatch = useDispatch();
 	const favorites = useSelector((state) => state.favorite.favorites);
 	const { isLoggedIn } = useSelector((state) => state.user);
+	const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
 	const handleAddToOrder = () => {
 		dispatch(addProduct(item));
@@ -23,6 +25,14 @@ export const CatalogProduct = ({ item }) => {
 		} else {
 			dispatch(addFavorite(item));
 		}
+	};
+
+	const handleOpenDetails = () => {
+		setIsDetailsOpen(true);
+	};
+
+	const handleCloseDetails = () => {
+		setIsDetailsOpen(false);
 	};
 
 	return (
@@ -38,11 +48,11 @@ export const CatalogProduct = ({ item }) => {
 				<span className='currency'>&nbsp;₽</span>
 			</p>
 
-			<h3 className={style.title}>
-				<button className={style.detail}>{item.title}</button>
-			</h3>
-
 			<p className={style.weight}>{item.weight}г</p>
+
+			<button className={style.add} onClick={handleOpenDetails}>
+				Открыть
+			</button>
 
 			<button className={style.add} type='button' onClick={handleAddToOrder}>
 				Добавить
@@ -57,6 +67,15 @@ export const CatalogProduct = ({ item }) => {
 						? 'Удалить из избранного'
 						: 'Добавить в избранное'}
 				</button>
+			)}
+
+			{isDetailsOpen && (
+				<div className={style.productDetailsOverlay}>
+					<ProductDetails item={item} onClose={handleCloseDetails} />
+					<button className={style.closeDetails} onClick={handleCloseDetails}>
+						Закрыть
+					</button>
+				</div>
 			)}
 		</article>
 	);
