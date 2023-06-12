@@ -25,6 +25,3 @@
 - Используется RTK Query - [productApi](https://github.com/cxvint/delivery/blob/main/src/store/product/productApi.js)
 - Используется  Transforming Responses - [productApi](https://github.com/cxvint/delivery/blob/main/src/store/product/productApi.js)
 - Используется нормализованная структура стейта (createEntityAdapter). - [productSlice](https://github.com/cxvint/delivery/blob/main/src/store/product/productSlice.js)
-
-##### Backend
--написан сервер [index.js](https://github.com/cxvint/api_delivery/blob/main/index.js)

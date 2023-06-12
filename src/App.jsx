@@ -9,6 +9,7 @@ import { Favorites } from './components/Favorites/Favorites';
 import { store } from './store';
 import { ThemeProvider } from './components/Header/ThemeContext';
 import { HistoryOrder } from './components/HistoryOrder/HistoryOrder';
+import { ProductDetails } from './components/ProductDetails/ProductDetails';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 const LazyNavigation = lazy(() => import('./components/Navigation/Navigation'));
@@ -36,6 +37,7 @@ export const App = () => {
 								<Route path='/signup' element={<Register />} />
 								<Route path='/favorites' element={<Favorites />} />
 								<Route path='/history' element={<HistoryOrder />} />
+								<Route path='/:id' element={<ProductDetails />} />
 							</Routes>
 						</ErrorBoundary>
 					</main>

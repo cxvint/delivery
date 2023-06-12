@@ -11,7 +11,13 @@ export const productApi = createApi({
 				return response;
 			},
 		}),
+		fetchProductById: builder.query({
+			query: (productId) => `/${productId}`,
+			transformResponse: (response) => {
+				return response;
+			},
+		}),
 	}),
 });
 
-export const { useFetchProductsQuery } = productApi;
+export const { useFetchProductsQuery, useFetchProductByIdQuery } = productApi;

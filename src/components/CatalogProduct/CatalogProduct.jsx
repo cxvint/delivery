@@ -6,6 +6,7 @@ import {
 	addFavorite,
 	removeFavorite,
 } from '../../store/favorites/favoritesSlice';
+import { useNavigate } from 'react-router-dom';
 import { API_URI } from '../../const';
 import style from './CatalogProduct.module.css';
 
@@ -14,6 +15,7 @@ export const CatalogProduct = ({ item }) => {
 	const favorites = useSelector((state) => state.favorites.favorites);
 	const { isLoggedIn } = useSelector((state) => state.user);
 	const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const handleAddToOrder = () => {
 		dispatch(addProduct(item));
@@ -28,7 +30,7 @@ export const CatalogProduct = ({ item }) => {
 	};
 
 	const handleOpenDetails = () => {
-		setIsDetailsOpen(true);
+		navigate(`/${item.id}`);
 	};
 
 	const handleCloseDetails = () => {
